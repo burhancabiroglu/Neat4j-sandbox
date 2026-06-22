@@ -15,6 +15,9 @@ version '1.1.0-SNAPSHOT'
 
 application {
     mainClass = 'com.cabir.neat4j.sandbox.Main'
+    if (System.properties['os.name'].toLowerCase().contains('mac')) {
+        applicationDefaultJvmArgs = ['-XstartOnFirstThread']
+    }
 }
 
 repositories {
@@ -26,12 +29,12 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
     implementation "com.cabir:neat4j:1.1.0-SNAPSHOT"
     implementation project(":game")
-    implementation "com.badlogicgames.gdx:gdx-backend-lwjgl:1.10.0"
-    implementation "com.badlogicgames.gdx:gdx-platform:1.10.0:natives-desktop"
-    implementation "com.badlogicgames.gdx:gdx-box2d-platform:1.10.0:natives-desktop"
+    implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:1.12.1"
+    implementation "com.badlogicgames.gdx:gdx-platform:1.12.1:natives-desktop"
+    implementation "com.badlogicgames.gdx:gdx-box2d-platform:1.12.1:natives-desktop"
 
-    implementation "com.badlogicgames.gdx:gdx:1.10.0"
-    implementation "com.badlogicgames.gdx:gdx-box2d:1.10.0"
+    implementation "com.badlogicgames.gdx:gdx:1.12.1"
+    implementation "com.badlogicgames.gdx:gdx-box2d:1.12.1"
 }
 
 test {

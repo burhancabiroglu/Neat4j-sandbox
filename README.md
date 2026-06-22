@@ -44,6 +44,31 @@ implementation "com.cabir:neat4j:1.1.0-SNAPSHOT"
 
 This keeps the game independent from the library source while still making local development fast.
 
+## Running Locally
+
+The desktop app uses LibGDX with the LWJGL3 backend.
+
+From the terminal:
+
+```bash
+JAVA_HOME=/opt/homebrew/Cellar/openjdk@21/21.0.11/libexec/openjdk.jdk/Contents/Home ./gradlew run
+```
+
+On macOS, the Gradle `run` task automatically adds `-XstartOnFirstThread`, which LWJGL3 requires.
+
+In IntelliJ IDEA, the easiest path is to run the Gradle task:
+
+```text
+Tasks > application > run
+```
+
+If you create a manual Application configuration, set:
+
+```text
+Main class: com.cabir.neat4j.sandbox.Main
+VM options: -XstartOnFirstThread
+```
+
 ## Implementation Note
 
 The game uses the `Neat4j` library to evolve weights and biases for a fixed neural-network skeleton. It does not yet use structural NEAT features such as innovation numbers, speciation, or node/connection topology mutation.
