@@ -1,146 +1,121 @@
 # Neat4j Sandbox
 
-## About
+`neat4j-sandbox` is an experimental LibGDX environment for testing the `Neat4j` neuroevolution library in a game-like setting. The project was inspired by the spirit of OpenAI Gym: keep the learning algorithm separate from the environment, then use the environment to observe how agents behave under a clear fitness signal.
 
-`neat4j-sandbox` is a LibGDX playground for experimenting with the `Neat4j` library in game-like environments. It was inspired by OpenAI Gym-style experimentation: keep the learning algorithm in the library, and keep the interactive simulation in a separate sandbox.
+The first environment is a simple Mario-style side-scroller. A population of neural networks is evaluated in the same map, and each network controls when the character should jump.
 
-## AI Mario Sandbox
+## Relationship to Neat4j
 
-Built using LibGDX.<br>
-<b>Fitness function</b> = <code><strong>ƒ(+=$correctJump*5)</strong></code>
-
-
-```java
-// Loss ƒunction: categorical_crossentropy
-
-NetworkSkeleton skeleton = new NetworkSkeleton();
-skeleton.add(new LayerSkeleton(1,3));
-skeleton.add(new LayerSkeleton(ActivationAnnotation.ReLU));
-skeleton.add(new LayerSkeleton(3,8));
-skeleton.add(new LayerSkeleton(ActivationAnnotation.ReLU));
-skeleton.add(new LayerSkeleton(8,4));
-skeleton.add(new LayerSkeleton(ActivationAnnotation.ReLU));
-skeleton.add(new LayerSkeleton(4,3));
-skeleton.add(new LayerSkeleton(ActivationAnnotation.ReLU));
-skeleton.add(new LayerSkeleton(3,2));
-
-neatPlayer = new NEAT(skeleton,10,0.1,100);
-```
-
-<div align-items=center; style="text-align: center;" width="100%">
-<img src ="assetmd/img.gif" width="80%" >
-</div>
-</br>
-</br>
-
-## Project Scope
-
-The sandbox implements the published `com.cabir:neat4j` package through Gradle composite builds:
+The sandbox consumes the `Neat4j` package through a Gradle composite build:
 
 ```groovy
 includeBuild '../Neat4j'
 implementation "com.cabir:neat4j:1.1.0-SNAPSHOT"
 ```
 
-This keeps the game independent from the library source while still making local development fast.
+This keeps the simulation code independent from the library while still making local development fast. Changes made in `Neat4j` can be tested immediately inside the sandbox without publishing a package first.
+
+## Environment
+
+The current environment uses:
+
+- LibGDX for rendering and application lifecycle;
+- Box2D for physics and collisions;
+- a tiled map for level geometry;
+- `Neat4j` for neural-network population search.
+
+The agent receives a simple distance signal from a raycast in front of the player. The network produces two output values, and the sandbox interprets their relative values as a jump decision.
+
+The fitness function rewards forward progress and successful obstacle interaction:
+
+```text
+fitness = horizontal_progress / 10 + jump_score
+```
+
+This is deliberately simple. It is useful for observing early neuroevolution behavior, but it is not intended as a formal benchmark.
+
+## Current Learning Model
+
+The sandbox uses `Neat4j` to evolve weights and biases for a fixed neural-network skeleton:
+
+```java
+NetworkSkeleton skeleton = new NetworkSkeleton();
+skeleton.add(new LayerSkeleton(1, 3));
+skeleton.add(new LayerSkeleton(ActivationAnnotation.ReLU));
+skeleton.add(new LayerSkeleton(3, 8));
+skeleton.add(new LayerSkeleton(ActivationAnnotation.ReLU));
+skeleton.add(new LayerSkeleton(8, 4));
+skeleton.add(new LayerSkeleton(ActivationAnnotation.ReLU));
+skeleton.add(new LayerSkeleton(4, 3));
+skeleton.add(new LayerSkeleton(ActivationAnnotation.ReLU));
+skeleton.add(new LayerSkeleton(3, 2));
+
+NEAT neatPlayer = new NEAT(skeleton, 10, 0.1, 100);
+```
+
+The current library does not yet implement structural NEAT features such as innovation numbers, speciation, or topology-changing mutation.
+
+## Demo
+
+<div align="center">
+  <img src="assetmd/img.gif" width="80%" alt="Neat4j sandbox gameplay preview">
+</div>
 
 ## Running Locally
 
-The desktop app uses LibGDX with the LWJGL3 backend.
-
-From the terminal:
+The desktop app uses the LibGDX LWJGL3 backend. On macOS, LWJGL3 must start on the first JVM thread; the Gradle `run` task handles this automatically.
 
 ```bash
 JAVA_HOME=/opt/homebrew/Cellar/openjdk@21/21.0.11/libexec/openjdk.jdk/Contents/Home ./gradlew run
 ```
 
-On macOS, the Gradle `run` task automatically adds `-XstartOnFirstThread`, which LWJGL3 requires.
-
-In IntelliJ IDEA, the easiest path is to run the Gradle task:
+You can also run the Gradle task from IntelliJ IDEA:
 
 ```text
 Tasks > application > run
 ```
 
-If you create a manual Application configuration, set:
+If you create a manual IntelliJ Application configuration, use:
 
 ```text
 Main class: com.cabir.neat4j.sandbox.Main
 VM options: -XstartOnFirstThread
 ```
 
-## Implementation Note
+The Gradle task is usually safer because it sets up the classpath and native dependencies for LibGDX.
 
-The game uses the `Neat4j` library to evolve weights and biases for a fixed neural-network skeleton. It does not yet use structural NEAT features such as innovation numbers, speciation, or node/connection topology mutation.
-</br>
-</br>
+## Build and Test
 
-## Developer Guide
-
-### <ul>
-### <li> Build Own Neat Network 
-Build your first neat mesh and solve problems easily
-
-```java
-// * Problem: XOR GATES PROBLEM
-Matrix inputData = new Matrix(new double[][]{
-            { 0, 0 },
-            { 0, 1 },
-            { 1, 0 },
-            { 1, 1 },
-});
-
-Matrix outputData = new Matrix(new double[][]{
-            { 0 },
-            { 1 },
-            { 1 },
-            { 0 },
-});
-
-
-```
-```java
-// declare lightweight architecture
-NetworkSkeleton skeleton = new NetworkSkeleton();
-
-skeleton.add(new LayerSkeleton(2,4));
-skeleton.add(new LayerSkeleton(ActivationAnnotation.ReLU));
-skeleton.add(new LayerSkeleton(4,4));
-skeleton.add(new LayerSkeleton(ActivationAnnotation.ReLU));
-skeleton.add(new LayerSkeleton(4,3));
-skeleton.add(new LayerSkeleton(ActivationAnnotation.ReLU));
-skeleton.add(new LayerSkeleton(3,1));
-
-
-
-/* 
-NEAT(skeleton,populationSize,mutationRate,generation)
-* skeleton: NetworkSkeleton
-* populationSize: Int
-* mutationRate: Double | Float
-* generation: Int
-*/
-
-NEAT neat = new NEAT(skeleton,60,0.1,500);
-
-neat.fit(inputData,outputData);
-
-NeatNetwork bestNetwork = neat.best();
-
-// Test own network
-bestNetwork.forward(inputData).log();
-
-```
 ```bash
-> Task :Main.main()
-{0,0} => 0.004609976235675384 
-{0,1} => 0.9999217817261652 
-{1,0} => 1.0091362689410868 
-{1,1} => 0.035621171754300907
-
+./gradlew test
 ```
 
+The test task compiles both the sandbox and the included `Neat4j` composite build.
 
-</li>
+## Project Structure
 
-</ul>
+```text
+src/main/java/com/cabir/neat4j/sandbox
+└── Main.java                 # Desktop entry point
+
+game/src/main/java/com/cabir/neat4j/sandbox
+├── core                      # Game screen, player, physics objects
+└── desktop                   # Desktop launcher
+
+game/src/main/resources       # Maps, tiles, textures, texture atlas
+```
+
+## Roadmap
+
+Useful next steps:
+
+- define a small environment interface similar to `reset`, `step`, `observation`, and `reward`;
+- separate rendering from simulation so experiments can run headlessly;
+- add reproducible seeds for fair comparisons;
+- expose training metrics per generation;
+- add more environments beyond the Mario-style map;
+- connect the sandbox to a future structural NEAT implementation.
+
+## License
+
+This project is licensed under the terms included in `LICENSE`.
