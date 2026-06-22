@@ -3,10 +3,22 @@ plugins {
 }
 
 group 'com.cabir'
-version '1.1.0-SNAPSHOT'
+version '1.1.0'
 
 repositories {
-    mavenLocal()
+    def githubPackagesUsername = findProperty('gpr.user') ?: System.getenv('GITHUB_ACTOR')
+    def githubPackagesToken = findProperty('gpr.token') ?: System.getenv('GITHUB_TOKEN') ?: System.getenv('REPO_TOKEN')
+
+    maven {
+        name = 'Neat4jGitHubPackages'
+        url = uri('https://maven.pkg.github.com/burhancabiroglu/Neat4j')
+        if (githubPackagesUsername && githubPackagesToken) {
+            credentials {
+                username = githubPackagesUsername
+                password = githubPackagesToken
+            }
+        }
+    }
     maven { url "https://plugins.gradle.org/m2/" }
     maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     maven { url "https://oss.sonatype.org/content/repositories/releases/" }
@@ -15,7 +27,7 @@ repositories {
 }
 
 dependencies {
-    implementation "com.cabir:neat4j:1.1.0-SNAPSHOT"
+    implementation "com.cabir:neat4j:${rootProject.ext.neat4jVersion}"
     implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:1.12.1"
     implementation "com.badlogicgames.gdx:gdx-platform:1.12.1:natives-desktop"
     implementation "com.badlogicgames.gdx:gdx-box2d-platform:1.12.1:natives-desktop"

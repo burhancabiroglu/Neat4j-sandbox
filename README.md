@@ -6,14 +6,23 @@ The first environment is a simple Mario-style side-scroller. A population of neu
 
 ## Relationship to Neat4j
 
-The sandbox consumes the `Neat4j` package through a Gradle composite build:
+The sandbox consumes the published `Neat4j` package from GitHub Packages:
 
 ```groovy
-includeBuild '../Neat4j'
-implementation "com.cabir:neat4j:1.1.0-SNAPSHOT"
+repositories {
+    maven {
+        url = uri("https://maven.pkg.github.com/burhancabiroglu/Neat4j")
+        credentials {
+            username = findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
+            password = findProperty("gpr.token") ?: System.getenv("GITHUB_TOKEN")
+        }
+    }
+}
+
+implementation "com.cabir:neat4j:1.1.0"
 ```
 
-This keeps the simulation code independent from the library while still making local development fast. Changes made in `Neat4j` can be tested immediately inside the sandbox without publishing a package first.
+This keeps the simulation code independent from the library and makes the sandbox behave like a real downstream consumer of the package.
 
 ## Environment
 
@@ -65,6 +74,13 @@ The current library does not yet implement structural NEAT features such as inno
 
 The desktop app uses the LibGDX LWJGL3 backend. On macOS, LWJGL3 must start on the first JVM thread; the Gradle `run` task handles this automatically.
 
+GitHub Packages requires credentials when Gradle resolves the `Neat4j` dependency. Add them to `~/.gradle/gradle.properties`:
+
+```properties
+gpr.user=your-github-username
+gpr.token=your-github-token
+```
+
 ```bash
 JAVA_HOME=/opt/homebrew/Cellar/openjdk@21/21.0.11/libexec/openjdk.jdk/Contents/Home ./gradlew run
 ```
@@ -90,7 +106,7 @@ The Gradle task is usually safer because it sets up the classpath and native dep
 ./gradlew test
 ```
 
-The test task compiles both the sandbox and the included `Neat4j` composite build.
+The test task compiles the sandbox against the published `Neat4j` package.
 
 ## Project Structure
 

@@ -11,7 +11,11 @@ jar {
     }
 }
 group 'com.cabir'
-version '1.1.0-SNAPSHOT'
+version '1.1.0'
+
+ext {
+    neat4jVersion = '1.1.0'
+}
 
 application {
     mainClass = 'com.cabir.neat4j.sandbox.Main'
@@ -21,13 +25,26 @@ application {
 }
 
 repositories {
+    def githubPackagesUsername = findProperty('gpr.user') ?: System.getenv('GITHUB_ACTOR')
+    def githubPackagesToken = findProperty('gpr.token') ?: System.getenv('GITHUB_TOKEN') ?: System.getenv('REPO_TOKEN')
+
+    maven {
+        name = 'Neat4jGitHubPackages'
+        url = uri('https://maven.pkg.github.com/burhancabiroglu/Neat4j')
+        if (githubPackagesUsername && githubPackagesToken) {
+            credentials {
+                username = githubPackagesUsername
+                password = githubPackagesToken
+            }
+        }
+    }
     mavenCentral()
 }
 
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
-    implementation "com.cabir:neat4j:1.1.0-SNAPSHOT"
+    implementation "com.cabir:neat4j:${neat4jVersion}"
     implementation project(":game")
     implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:1.12.1"
     implementation "com.badlogicgames.gdx:gdx-platform:1.12.1:natives-desktop"
