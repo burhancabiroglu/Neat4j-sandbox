@@ -70,22 +70,71 @@ The current library does not yet implement structural NEAT features such as inno
   <img src="assetmd/img.gif" width="80%" alt="Neat4j sandbox gameplay preview">
 </div>
 
-## Running Locally
+## Requirements
 
-The desktop app uses the LibGDX LWJGL3 backend. On macOS, LWJGL3 must start on the first JVM thread; the Gradle `run` task handles this automatically.
+- Java 21;
+- Git;
+- a GitHub personal access token, classic, with `read:packages` permission, because the sandbox downloads `com.cabir:neat4j:1.1.0` from GitHub Packages;
+- IntelliJ IDEA or a terminal with Gradle support.
 
-GitHub Packages requires credentials when Gradle resolves the `Neat4j` dependency. Add them to `~/.gradle/gradle.properties`:
+Check your Java version:
+
+```bash
+java -version
+```
+
+If several JDKs are installed, point Gradle to Java 21:
+
+```bash
+export JAVA_HOME=/path/to/jdk-21
+```
+
+On macOS with Homebrew OpenJDK 21, that may look like:
+
+```bash
+export JAVA_HOME=/opt/homebrew/Cellar/openjdk@21/21.0.11/libexec/openjdk.jdk/Contents/Home
+```
+
+## Package Credentials
+
+GitHub Packages requires credentials when Gradle resolves the `Neat4j` dependency. Add a GitHub personal access token, classic, to `~/.gradle/gradle.properties`:
 
 ```properties
 gpr.user=your-github-username
 gpr.token=your-github-token
 ```
 
+For local development, the token only needs `read:packages` permission.
+
+## Quick Start
+
+The desktop app uses the LibGDX LWJGL3 backend. On macOS, LWJGL3 must start on the first JVM thread; the Gradle `run` task handles this automatically.
+
+Clone the repository, enter the project directory, and start the desktop sandbox:
+
+```bash
+git clone https://github.com/burhancabiroglu/Neat4j-sandbox.git
+cd Neat4j-sandbox
+./gradlew run
+```
+
+If your shell is not already using Java 21, run it with `JAVA_HOME`:
+
 ```bash
 JAVA_HOME=/opt/homebrew/Cellar/openjdk@21/21.0.11/libexec/openjdk.jdk/Contents/Home ./gradlew run
 ```
 
-You can also run the Gradle task from IntelliJ IDEA:
+The application opens a desktop LibGDX window and starts evaluating neural-network agents in the side-scroller environment.
+
+## IntelliJ IDEA
+
+Open the repository root as a Gradle project:
+
+```text
+File > Open > Neat4j-sandbox
+```
+
+After Gradle sync finishes, run the application task:
 
 ```text
 Tasks > application > run
@@ -102,8 +151,16 @@ The Gradle task is usually safer because it sets up the classpath and native dep
 
 ## Build and Test
 
+Run the test suite:
+
 ```bash
 ./gradlew test
+```
+
+Build the project:
+
+```bash
+./gradlew build
 ```
 
 The test task compiles the sandbox against the published `Neat4j` package.
