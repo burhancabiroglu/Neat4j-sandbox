@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Array;
-import com.cabir.neat4j.math.Matrix;
-import com.cabir.neat4j.network.NeatNetwork;
+import com.cabir.math.Matrix;
+import com.cabir.network.NeatNetwork;
 
 
 public class Mario extends Sprite{

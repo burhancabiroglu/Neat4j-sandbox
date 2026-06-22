@@ -1,4 +1,3 @@
-rootProject.name = 'neat4j'
-include 'core'
+rootProject.name = 'neat4j-p'
+includeBuild '../Neat4j'
 include 'game'
-

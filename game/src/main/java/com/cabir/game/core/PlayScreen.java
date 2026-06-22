@@ -14,10 +14,10 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.cabir.neat4j.layer.ActivationType;
-import com.cabir.neat4j.layer.LayerSkeleton;
-import com.cabir.neat4j.main.NEAT;
-import com.cabir.neat4j.network.Skeleton;
+import com.cabir.algo.NEAT;
+import com.cabir.core.annotation.ActivationAnnotation;
+import com.cabir.skeleton.LayerSkeleton;
+import com.cabir.skeleton.NetworkSkeleton;
 
 
 public class PlayScreen implements Screen {
@@ -47,15 +47,15 @@ public class PlayScreen implements Screen {
     @SuppressWarnings("IntegerDivisionInFloatingPointContext")
     public PlayScreen(GrumpRun game){
 
-        Skeleton skeleton = new Skeleton();
+        NetworkSkeleton skeleton = new NetworkSkeleton();
         skeleton.add(new LayerSkeleton(1,3));
-        skeleton.add(new LayerSkeleton(ActivationType.ReLU));
+        skeleton.add(new LayerSkeleton(ActivationAnnotation.ReLU));
         skeleton.add(new LayerSkeleton(3,8));
-        skeleton.add(new LayerSkeleton(ActivationType.ReLU));
+        skeleton.add(new LayerSkeleton(ActivationAnnotation.ReLU));
         skeleton.add(new LayerSkeleton(8,4));
-        skeleton.add(new LayerSkeleton(ActivationType.ReLU));
+        skeleton.add(new LayerSkeleton(ActivationAnnotation.ReLU));
         skeleton.add(new LayerSkeleton(4,3));
-        skeleton.add(new LayerSkeleton(ActivationType.ReLU));
+        skeleton.add(new LayerSkeleton(ActivationAnnotation.ReLU));
         skeleton.add(new LayerSkeleton(3,2));
 
         evoBrain = new NEAT(skeleton,10,0.1,100);

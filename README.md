@@ -14,15 +14,15 @@ Built using libgdx.<br>
 ```java
 // Loss ƒunction: categorical_crossentropy
 
-Skeleton skeleton = new Skeleton();
+NetworkSkeleton skeleton = new NetworkSkeleton();
 skeleton.add(new LayerSkeleton(1,3));
-skeleton.add(new LayerSkeleton(ActivationType.ReLU));
+skeleton.add(new LayerSkeleton(ActivationAnnotation.ReLU));
 skeleton.add(new LayerSkeleton(3,8));
-skeleton.add(new LayerSkeleton(ActivationType.ReLU));
+skeleton.add(new LayerSkeleton(ActivationAnnotation.ReLU));
 skeleton.add(new LayerSkeleton(8,4));
-skeleton.add(new LayerSkeleton(ActivationType.ReLU));
+skeleton.add(new LayerSkeleton(ActivationAnnotation.ReLU));
 skeleton.add(new LayerSkeleton(4,3));
-skeleton.add(new LayerSkeleton(ActivationType.ReLU));
+skeleton.add(new LayerSkeleton(ActivationAnnotation.ReLU));
 skeleton.add(new LayerSkeleton(3,2));
 
 neatPlayer = new NEAT(skeleton,10,0.1,100);
@@ -66,21 +66,21 @@ Matrix outputData = new Matrix(new double[][]{
 ```
 ```java
 // declare lightweight architecture
-Skeleton skeleton = new Skeleton();
+NetworkSkeleton skeleton = new NetworkSkeleton();
 
 skeleton.add(new LayerSkeleton(2,4));
-skeleton.add(new LayerSkeleton("relu"));
+skeleton.add(new LayerSkeleton(ActivationAnnotation.ReLU));
 skeleton.add(new LayerSkeleton(4,4));
-skeleton.add(new LayerSkeleton("relu"));
+skeleton.add(new LayerSkeleton(ActivationAnnotation.ReLU));
 skeleton.add(new LayerSkeleton(4,3));
-skeleton.add(new LayerSkeleton("relu"));
+skeleton.add(new LayerSkeleton(ActivationAnnotation.ReLU));
 skeleton.add(new LayerSkeleton(3,1));
 
 
 
 /* 
 NEAT(skeleton,populationSize,mutationRate,generation)
-* skeleton: Skelaton
+* skeleton: NetworkSkeleton
 * populationSize: Int
 * mutationRate: Double | Float
 * generation: Int

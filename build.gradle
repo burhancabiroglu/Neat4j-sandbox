@@ -1,16 +1,21 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 jar {
     manifest {
         attributes(
-          'Main-Class': 'com.cabir.Main.'
+          'Main-Class': 'com.cabir.Main'
         )
     }
 }
 group 'com.cabir'
-version 'DEV'
+version '1.0.0-SNAPSHOT'
+
+application {
+    mainClass = 'com.cabir.Main'
+}
 
 repositories {
     mavenCentral()
@@ -19,7 +24,7 @@ repositories {
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
-    implementation project(":core")
+    implementation "com.cabir:neat4j:1.0.0-SNAPSHOT"
     implementation project(":game")
     implementation "com.badlogicgames.gdx:gdx-backend-lwjgl:1.10.0"
     implementation "com.badlogicgames.gdx:gdx-platform:1.10.0:natives-desktop"

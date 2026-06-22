@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'com.cabir'
-version 'DEV'
+version '1.0.0-SNAPSHOT'
 
 repositories {
     mavenLocal()
@@ -15,7 +15,7 @@ repositories {
 }
 
 dependencies {
-    implementation project(":core")
+    implementation "com.cabir:neat4j:1.0.0-SNAPSHOT"
     implementation "com.badlogicgames.gdx:gdx-backend-lwjgl:1.10.0"
     implementation "com.badlogicgames.gdx:gdx-platform:1.10.0:natives-desktop"
     implementation "com.badlogicgames.gdx:gdx-box2d-platform:1.10.0:natives-desktop"
