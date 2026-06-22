@@ -40,6 +40,12 @@ In this project, it is aimed to realize a high-performance neat algorithm that c
 </br>
 </br>
 
+## Implementation Note
+
+The game uses the `Neat4j` library to evolve weights and biases for a fixed neural-network skeleton. It does not yet use structural NEAT features such as innovation numbers, speciation, or node/connection topology mutation.
+</br>
+</br>
+
 ## Developer Guide
 
 ### <ul>
