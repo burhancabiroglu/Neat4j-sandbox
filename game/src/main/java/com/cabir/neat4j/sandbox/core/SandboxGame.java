@@ -1,9 +1,9 @@
-package com.cabir.game.core;
+package com.cabir.neat4j.sandbox.core;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class GrumpRun extends Game {
+public class SandboxGame extends Game {
 
 	public SpriteBatch batch;
 	

@@ -1,4 +1,4 @@
-package com.cabir.game.core;
+package com.cabir.neat4j.sandbox.core;
 
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;

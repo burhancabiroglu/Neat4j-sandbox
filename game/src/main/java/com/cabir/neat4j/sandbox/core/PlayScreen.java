@@ -1,4 +1,4 @@
-package com.cabir.game.core;
+package com.cabir.neat4j.sandbox.core;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -22,7 +22,7 @@ import com.cabir.skeleton.NetworkSkeleton;
 
 public class PlayScreen implements Screen {
 
-    private final GrumpRun game;
+    private final SandboxGame game;
     public Viewport viewport;
     public OrthographicCamera camera;
     private final OrthogonalTiledMapRenderer renderer;
@@ -45,7 +45,7 @@ public class PlayScreen implements Screen {
 
 
     @SuppressWarnings("IntegerDivisionInFloatingPointContext")
-    public PlayScreen(GrumpRun game){
+    public PlayScreen(SandboxGame game){
 
         NetworkSkeleton skeleton = new NetworkSkeleton();
         skeleton.add(new LayerSkeleton(1,3));

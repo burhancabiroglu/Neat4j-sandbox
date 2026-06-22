@@ -1,4 +1,4 @@
-package com.cabir.game.core;
+package com.cabir.neat4j.sandbox.core;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

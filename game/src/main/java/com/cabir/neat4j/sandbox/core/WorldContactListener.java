@@ -1,9 +1,9 @@
-package com.cabir.game.core;
+package com.cabir.neat4j.sandbox.core;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.physics.box2d.*;
 
-import static com.cabir.game.core.PlayScreen.*;
+import static com.cabir.neat4j.sandbox.core.PlayScreen.*;
 
 
 public class WorldContactListener implements ContactListener {

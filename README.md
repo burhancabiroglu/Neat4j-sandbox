@@ -1,13 +1,12 @@
-# Neuroevolution Of Augmenting Topologies
+# Neat4j Sandbox
 
-## Abtract
+## About
 
-NeuroEvolution of Augmenting Topologies (NEAT) is a genetic algorithm (GA) for the generation of evolving artificial neural networks (a neuroevolution technique) developed by Ken Stanley in 2002 while at The University of Texas at Austin. It alters both the weighting parameters and structures of networks, attempting to find a balance between the fitness of evolved solutions and their diversity. It is based on applying three key techniques: tracking genes with history markers to allow crossover among topologies, applying speciation (the evolution of species) to preserve innovations, and developing topologies incrementally from simple initial structures. <a href="https://en.wikipedia.org/wiki/Neuroevolution_of_augmenting_topologies">wikipedia</a>
-</br>
-</br>
+`neat4j-sandbox` is a LibGDX playground for experimenting with the `Neat4j` library in game-like environments. It was inspired by OpenAI Gym-style experimentation: keep the learning algorithm in the library, and keep the interactive simulation in a separate sandbox.
 
-## AI Mario From Stratch
-Built using libgdx.<br>
+## AI Mario Sandbox
+
+Built using LibGDX.<br>
 <b>Fitness function</b> = <code><strong>ƒ(+=$correctJump*5)</strong></code>
 
 
@@ -34,11 +33,16 @@ neatPlayer = new NEAT(skeleton,10,0.1,100);
 </br>
 </br>
 
-## Scope Of The Project
+## Project Scope
 
-In this project, it is aimed to realize a high-performance neat algorithm that can solve given problems by using advanced object-oriented programming.
-</br>
-</br>
+The sandbox implements the published `com.cabir:neat4j` package through Gradle composite builds:
+
+```groovy
+includeBuild '../Neat4j'
+implementation "com.cabir:neat4j:1.1.0-SNAPSHOT"
+```
+
+This keeps the game independent from the library source while still making local development fast.
 
 ## Implementation Note
 

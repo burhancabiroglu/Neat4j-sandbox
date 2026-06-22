@@ -1,12 +1,12 @@
-package com.cabir.game.desktop;
+package com.cabir.neat4j.sandbox.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.cabir.game.core.GrumpRun;
+import com.cabir.neat4j.sandbox.core.SandboxGame;
 
 public class DesktopLauncher {
     public static void main (String[] arg) {
         //LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        //new LwjglApplication(new GrumpRun(), config);
+        //new LwjglApplication(new SandboxGame(), config);
     }
 }
